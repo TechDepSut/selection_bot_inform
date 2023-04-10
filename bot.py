@@ -1,8 +1,8 @@
-from vkbottle import Keyboard, Text, BaseStateGroup
+from vkbottle import Keyboard, Text, BaseStateGroup, EMPTY_KEYBOARD
 from vkbottle.bot import Bot, Message
 import os
 
-bot = Bot(os.environ['TOKEN'])
+bot = Bot(os.environ.get('TOKEN'))
 
 class States(BaseStateGroup):
     CHOOSE_STATE = 0
@@ -14,7 +14,7 @@ async def start(message: Message):
     await message.answer("Привет! Это бот 1NFORM. Я помогу" + 
                         " тебе не запутаться в отделах проекта" + 
                         " и заполнить форму регистрации. Для начала" +
-                        " выбери отдел, в который хочешь отправить заявку.")
+                        " выбери отдел, в который хочешь отправить заявку.", keyboard=EMPTY_KEYBOARD)
     await bot.state_dispenser.set(message.peer_id, States.CHOOSE_STATE)
     await choosewishely(message.peer_id)
 
@@ -31,18 +31,14 @@ async def choosewishely(peer_id):
     keyboard.add(Text("Отдел Консультации"))
     keyboard.add(Text("Отдел Серферов"))
     keyboard.row()
-    keyboard.add(Text("Отдел Информатизации"))
-    keyboard.row()
+    # keyboard.add(Text("Отдел Информатизации"))
+    # keyboard.row()
     keyboard.add(Text("Отдел Маркетинга и Рекламы"))
     await bot.api.messages.send(peer_id=peer_id,message="В какой отдел ты хочешь?", keyboard=keyboard.get_json(), random_id=0)
 
 @bot.on.message(state=States.CHOOSE_STATE, text="Отдел Информатизации")
 async def info(message: Message):
-    await message.answer("Люди, которые создают сайты, ботов и другие сервисы" +
-                        " и системы, облегчая работу не только организаторам" +
-                        " проекта, но и администрации вуза. Например, бот, который" + 
-                        " сейчас присылает тебе эти сообщения, был сделан нашими программистами.\n" + 
-                        "\nПодать заявку в отдел можно тут:\nhttps://ъыъ.рф/Информатизация")
+    await message.answer("Ты думал, тут что-то будет, а нет, этого отдела больше нет \n Лучше ознакомься с Техническим Департаментом https://vk.com/tech__dep")
     await anythingElse(message.peer_id)
 
 @bot.on.message(state=States.CHOOSE_STATE, text="Отдел Модерации")
