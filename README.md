@@ -55,7 +55,7 @@
         pip3 install -r requirements.txt
         ```
 
-1. Setting environment variables
+5. Setting environment variables
 
     - For Windows:
 
@@ -78,3 +78,17 @@
             ```shell
             export TOKEN="TOKEN_TO_YOUR_BOT"
             ```
+
+6. Run bot
+
+    - For Windows:
+
+        ```shell
+        python .\bot.py
+        ```
+
+    - For Linux, MacOS:
+    
+        ```shell
+        python3 ./bot.py
+        ```
